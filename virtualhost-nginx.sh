@@ -58,7 +58,7 @@ if [ "$action" == 'create' ]; then
 		listen 80;
 		listen $port;
 		server_name $domain;
-		root $rootDir;
+		root $rootDir/web;
 
 		client_max_body_size 1152M;
 
