@@ -10,7 +10,7 @@ sitesEnable='/etc/nginx/sites-enabled/'
 
 if [ "$domain" == "" ] || [ "$port" == ""] || [ "rootDir" == "" ]; then
 	echo $"You have to enter 4 arguments"
-	echo $"Example : virtualhost create domain.dev 1337 /home/florian/sites/coucou"
+	echo $"Example : virtualhost create domain.dev 1337 /home/user/sites/coucou"
 	exit 1;
 fi
 
@@ -57,7 +57,7 @@ if [ "$action" == 'create' ]; then
 	if ! echo "server {
 		listen 80;
 		listen $port;
-		server_name $domain;
+		server_name $domain www.$domain;
 		root $rootDir/web;
 
 		client_max_body_size 1152M;
@@ -87,7 +87,7 @@ if [ "$action" == 'create' ]; then
 			include fastcgi_params;
 			fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
 			fastcgi_param HTTPS off; #on;
-			fastcgi_read_timeout 300; 
+			fastcgi_read_timeout 300;
 		}
 
 	}" > $sitesEnable$domain
@@ -126,7 +126,7 @@ else
 		sed -i "/$newhost/d" /etc/hosts
 
 		### restart Nginx
-		systemctl restart nginx 
+		systemctl restart nginx
 
 		### Delete virtual host rules files
 		rm $sitesEnable$domain
