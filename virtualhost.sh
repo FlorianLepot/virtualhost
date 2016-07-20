@@ -3,14 +3,13 @@
 ### Set default parameters
 action=$1
 domain=$2
-port=$3
 rootDir=$4
 owner=$(who am i | awk '{print $1}')
 sitesEnable='/etc/nginx/sites-enabled/'
 
-if [ "$domain" == "" ] || [ "$port" == ""] || [ "rootDir" == "" ]; then
-	echo $"You have to enter 4 arguments"
-	echo $"Example : virtualhost create domain.dev 1337 /home/user/sites/coucou"
+if [ "$domain" == "" ] || [ "rootDir" == "" ]; then
+	echo $"You have to enter 3 arguments"
+	echo $"Example : virtualhost create domain.dev /home/user/sites/coucou"
 	exit 1;
 fi
 
@@ -56,7 +55,6 @@ if [ "$action" == 'create' ]; then
 	### create virtual host rules file
 	if ! echo "server {
 		listen 80;
-		listen $port;
 		server_name $domain www.$domain;
 		root $rootDir/web;
 
@@ -99,7 +97,7 @@ if [ "$action" == 'create' ]; then
 	fi
 
 	### Add domain in /etc/hosts
-	if ! echo "127.0.0.1	$domain	// $port" >> /etc/hosts
+	if ! echo "127.0.0.1	$domain" >> /etc/hosts
 		then
 			echo $"ERROR: Not able write in /etc/hosts"
 			exit;
