@@ -3,7 +3,7 @@
 ### Set default parameters
 action=$1
 domain=$2
-rootDir=$4
+rootDir=$3
 owner=$(who am i | awk '{print $1}')
 sitesEnable='/etc/nginx/sites-enabled/'
 
