@@ -106,7 +106,7 @@ if [ "$action" == 'create' ]; then
 	fi
 
 	### restart Nginx
-	systemctl restart nginx
+	nginx -s stop && nginx
 
 	### show the finished message
 	echo -e $"Complete! \nYou now have a new Virtual Host \nYour new host is: http://$domain \nAnd its located at $rootDir"
